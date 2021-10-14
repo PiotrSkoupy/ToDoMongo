@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo App</title>
+    <link rel="stylesheet" href="https://fots.googleapis.com/css?family=Oswald">
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'flatly.min.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'styles.css')}}">
+</head>
+<body>
+    <div class = 'container-fluid' id='wrapper'>
+        <div class='row'>
+            <div class='col-lg-4 col-lg-offset-4' id='content'>
+                <h2>What are your goals for today?</h2>
+                <form action="{{ url_for('add_todo')}}" method = 'POST' role="form">
+                    <div class='form-group'>
+                        <div class = 'input-group'>
+                            <input name ='add-todo' type="text" class="form-control" placeholder="What is your priority?" aria-label="Todo" aria-describedby="add-btn">
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-default" id='add-btn'>ADD</button>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+                <div>
+                <div class='row t10' >
+                    <div class='col-lg-4'>
+                        <div class = 'btn-toolbar'>
+                            <a href="{{url_for('delete_completed')}}" type="button" class="btn btn-warning">
+                                <button type="submit" class="btn btn-default" id='del-btn'>DELETE COMPLETED</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class='row t10' id='delal'>
+                    <div class='col-lg-4'>
+                        <div class = 'btn-toolbar'>
+                            <a href="{{url_for('delete_all')}}" type="button" class="btn btn-warning">
+                                <button type="submit" class="btn btn-default" id='del-all-btn'>DELETE ALL</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <ul class = 'list-group t20'>
+                    {% for todo in todos %}
+                    <a href="{{ url_for('complete_todo', oid =todo._id)}}">
+                        <li class = 'list-group-item {% if todo.complete %}todo-completed{% endif %}'> {{todo.text}}</li>
+                    </a>
+                    {% endfor %}
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
